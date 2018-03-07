@@ -11,6 +11,8 @@ ipart (S5N a b) = b
 rpart :: S5N -> Integer
 rpart (S5N a b) = a
 
+--Define operations of multiplication and subtraction
+--(a + b*sqrt(5)) * (c + d*sqrt(5))
 mult :: S5N -> S5N -> S5N
 (S5N a b) `mult` (S5N c d) = S5N (a*c + 5*b*d) (a*d + b*c)
 
@@ -37,6 +39,7 @@ pow s n
         where root = (s `pow` (n `div` 2))
 
 --Well, actually 2*phi and 2*psi
+--We will divide by the power of 2 at the end
 phi = S5N 1 1
 psi = S5N 1 (-1)
 
