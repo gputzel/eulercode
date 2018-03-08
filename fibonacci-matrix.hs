@@ -15,7 +15,19 @@ instance Num TBT where
 upperLeft :: TBT -> Integer
 upperLeft (TBT ((a11,a12),(a21,a22))) = a11
 
+pow :: TBT -> Integer -> TBT
+pow _ 0 = fromInteger 1
+pow s n
+    | odd n = s*r*r
+    | otherwise = r*r
+        where r = s `pow` (n `div` 2)
+
 --Implementation with naive exponentiation
 --linear time
 fibSlow :: Integer -> Integer
 fibSlow n = upperLeft $ m ^(n-1)
+
+--Implementation using more efficient exponentiation
+--logarithmic time
+fib :: Integer -> Integer
+fib n = upperLeft $ (m `pow` (n-1))
