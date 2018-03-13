@@ -77,6 +77,7 @@ isProductOfTwoFast d n
 --d = 8: 9999000000009999
 --d = 9: 999900665566009999
 --d = 10: 99999834000043899999
+--d = 11: 9999994020000204999999
 
 main :: IO ()
-main = print $ (problem4OnceMore 11)
+main = print $ (problem4OnceMore 12)
