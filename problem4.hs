@@ -39,6 +39,7 @@ fromDigits :: [Integer] -> Integer
 fromDigits = foldl (\a b -> 10*a + b) 0
 
 --For d = 3, takes 0.08 seconds
+--But d = 5 take a while
 problem4 :: Integer -> Integer
 problem4 d = head $ filter (isProductOfTwo d) (palindromes d)
 
@@ -49,3 +50,35 @@ isProductOfTwo d n = any isGood dDigitNumbers
         start = 10^(d-1)
         finish = 10^d - 1
         isGood k = (n `mod` k == 0) && (n `div` k > start-1) && (n `div` k < finish + 1)
+
+--The key is to speed up isProductOfTwo
+--This one does d = 5 very fast 
+problem4OnceMore :: Integer -> Integer
+problem4OnceMore d = head $ filter (isProductOfTwoFast d) (palindromes d)
+
+isProductOfTwoFast :: Integer -> Integer -> Bool
+isProductOfTwoFast d n
+    | n > maxN = False
+    | n < minN = False
+    | otherwise = any divides candidates
+        where
+            maxN = (10^d - 1)^2
+            minN = (10^(d-1))^2
+            candidates = takeWhile (\k -> (k^2 <= n)) [bottom,(bottom+1)..]
+            bottom = n `div` (10^d - 1)
+            divides k = ((n `mod` k == 0) && (n `div` k <= (10^d-1)) && (n `div` k >= 10^(d-1)))
+
+--d = 2: 9009
+--d = 3: 906609
+--d = 4: 99000099
+--d = 5: 9966006699
+--d = 6: 999000000999
+--d = 7: 99956644665999
+--d = 8: 9999000000009999
+--d = 9: 999900665566009999
+--d = 10: 99999834000043899999
+--d = 11: 9999994020000204999999
+--d = 12: 999999000000000000999999
+
+main :: IO ()
+main = print $ (problem4OnceMore 12)
