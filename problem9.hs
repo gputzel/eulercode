@@ -21,6 +21,7 @@ factors_o n = ds ++ [r | (d,0) <- [divMod n r], r <- r:[d | d>r]] ++ reverse (ma
         r = floor (sqrt (fromIntegral n))
         ds = [i | i <- [1..r-1], mod n i == 0]
 
+--Very fast for n = 1000 or n = 10000
 problem9_from_factors :: Integer -> [Integer]
 problem9_from_factors n = head $ concat $ map triples_from_factor $ factors_o n
     where
