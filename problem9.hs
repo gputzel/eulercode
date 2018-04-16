@@ -22,8 +22,11 @@ factors_o n = ds ++ [r | (d,0) <- [divMod n r], r <- r:[d | d>r]] ++ reverse (ma
         ds = [i | i <- [1..r-1], mod n i == 0]
 
 --Very fast for n = 1000 or n = 10000
-problem9_from_factors :: Integer -> [Integer]
-problem9_from_factors n = head $ concat $ map triples_from_factor $ factors_o n
+--but takes 6.9 s to do n = 1010, say
+problem9_from_factors :: Integer -> Maybe [Integer]
+problem9_from_factors n = head' $ concat $ map triples_from_factor $ factors_o n
     where
         triples_from_factor k = map (scale k) (problem9general k)
         scale k = map (* (n `div` k))
+        head' [] = Nothing
+        head' (x:xs) = Just x
