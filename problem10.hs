@@ -8,4 +8,5 @@ isPrimeHelper a (p:ps)
 
 primes = 2 : filter isPrime [3..]
 
+#Takes 62 seconds on my machine
 problem10 = sum $ takeWhile (<2000000) primes
